@@ -36,15 +36,15 @@ import static org.assertj.core.api.Assertions.*;
 public class MultipleConnectorDefinitionServiceIT {
 
     @Autowired
-    private ConnectorService connectorService;
+    private ConnectorDefinitionService connectorDefinitionService;
 
     /**
      * Three files have json extensions, one does not.
      **/
     @Test
-    public void connectors() throws IOException {
+    public void connectorDefinitions() throws IOException {
 
-        List<ConnectorDefinition> connectorDefinitions = connectorService.get();
+        List<ConnectorDefinition> connectorDefinitions = connectorDefinitionService.get();
         assertThat(connectorDefinitions).hasSize(3);
     }
 }

@@ -29,14 +29,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class ConnectorService {
+public class ConnectorDefinitionService {
 
     private String connectorRoot;
 
     private final ObjectMapper objectMapper;
 
-    public ConnectorService(String connectorRoot, ObjectMapper objectMapper) {
+    public ConnectorDefinitionService(String connectorRoot, ObjectMapper objectMapper) {
         this.connectorRoot = connectorRoot;
         this.objectMapper = objectMapper;
     }

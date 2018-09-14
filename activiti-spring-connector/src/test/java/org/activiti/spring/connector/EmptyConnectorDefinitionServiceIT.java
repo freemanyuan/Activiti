@@ -36,12 +36,12 @@ import static org.assertj.core.api.Assertions.*;
 public class EmptyConnectorDefinitionServiceIT {
 
     @Autowired
-    private ConnectorService connectorService;
+    private ConnectorDefinitionService connectorDefinitionService;
 
     @Test
-    public void emptyConnectors() throws IOException {
+    public void emptyConnectorDefinitions() throws IOException {
 
-        List<ConnectorDefinition> connectorDefinitions = connectorService.get();
+        List<ConnectorDefinition> connectorDefinitions = connectorDefinitionService.get();
 
         assertThat(connectorDefinitions).isEmpty();
     }

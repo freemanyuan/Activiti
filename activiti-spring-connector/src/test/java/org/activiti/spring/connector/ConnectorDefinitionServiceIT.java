@@ -36,12 +36,12 @@ import static org.assertj.core.api.Assertions.*;
 public class ConnectorDefinitionServiceIT {
 
     @Autowired
-    private ConnectorService connectorService;
+    private ConnectorDefinitionService connectorDefinitionService;
 
     @Test
-    public void connector() throws IOException {
+    public void connectorDefinition() throws IOException {
 
-        List<ConnectorDefinition> connectorDefinitions = connectorService.get();
+        List<ConnectorDefinition> connectorDefinitions = connectorDefinitionService.get();
         assertThat(connectorDefinitions).hasSize(1);
         assertThat(connectorDefinitions.get(0).getId()).isEqualTo("connector-uuid");
         assertThat(connectorDefinitions.get(0).getName()).isEqualTo("Name-of-the-connector");
