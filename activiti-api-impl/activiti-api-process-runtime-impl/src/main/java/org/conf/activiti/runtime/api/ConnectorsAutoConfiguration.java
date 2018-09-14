@@ -22,7 +22,7 @@ import org.activiti.runtime.api.connector.ConnectorActionDefinitionFinder;
 import org.activiti.runtime.api.connector.DefaultServiceTaskBehavior;
 import org.activiti.runtime.api.connector.IntegrationContextBuilder;
 import org.activiti.runtime.api.connector.VariablesMatchHelper;
-import org.activiti.spring.connector.ConnectorService;
+import org.activiti.spring.connector.ConnectorDefinitionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.ApplicationContext;
@@ -36,11 +36,11 @@ import java.util.List;
 public class ConnectorsAutoConfiguration {
 
     @Autowired
-    private ConnectorService connectorService;
+    private ConnectorDefinitionService connectorDefinitionService;
 
     @Bean
     public List<ConnectorDefinition> connectorDefinitions() throws IOException {
-        return connectorService.get();
+        return connectorDefinitionService.get();
     }
 
     @Bean
@@ -51,14 +51,14 @@ public class ConnectorsAutoConfiguration {
     @Bean(name = DefaultActivityBehaviorFactory.DEFAULT_SERVICE_TASK_BEAN_NAME)
     @ConditionalOnMissingBean(name = DefaultActivityBehaviorFactory.DEFAULT_SERVICE_TASK_BEAN_NAME)
     public DefaultServiceTaskBehavior defaultServiceTaskBehavior(ApplicationContext applicationContext,
-                                                                 IntegrationContextBuilder integrationContextBuilder, ConnectorActionDefinitionFinder connectorActionDefinitionFinder, VariablesMatchHelper variablesMatchHelper) throws IOException {
+                                                                 IntegrationContextBuilder integrationContextBuilder, ConnectorActionDefinitionFinder connectorActionDefinitionFinder, VariablesMatchHelper variablesMatchHelper) {
         return new DefaultServiceTaskBehavior(applicationContext,
-                integrationContextBuilder, connectorDefinitions(), connectorActionDefinitionFinder, variablesMatchHelper);
+                integrationContextBuilder, connectorActionDefinitionFinder, variablesMatchHelper);
     }
 
     @Bean
-    public ConnectorActionDefinitionFinder connectorActionDefinitionFinder() {
-        return new ConnectorActionDefinitionFinder();
+    public ConnectorActionDefinitionFinder connectorActionDefinitionFinder() throws IOException{
+        return new ConnectorActionDefinitionFinder(connectorDefinitions());
     }
 
     @Bean

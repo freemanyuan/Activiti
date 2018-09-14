@@ -1,7 +1,5 @@
 package org.activiti.runtime.api.connector;
 
-import org.activiti.bpmn.model.ServiceTask;
-import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.model.connector.ActionDefinition;
 import org.activiti.model.connector.ConnectorDefinition;
 import org.apache.commons.lang3.StringUtils;
@@ -12,7 +10,13 @@ import java.util.stream.Collectors;
 
 public class ConnectorActionDefinitionFinder{
 
-    public Optional<ActionDefinition> find(String implementation, List<ConnectorDefinition> connectorDefinitions){
+    private final List<ConnectorDefinition> connectorDefinitions;
+
+    public ConnectorActionDefinitionFinder(List<ConnectorDefinition> connectorDefinitions) {
+        this.connectorDefinitions = connectorDefinitions;
+    }
+
+    public Optional<ActionDefinition> find(String implementation){
 
         Optional<ActionDefinition> actionDefinitionOptional = Optional.empty();
 

@@ -22,30 +22,23 @@ import org.activiti.bpmn.model.ServiceTask;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.impl.bpmn.behavior.AbstractBpmnActivityBehavior;
 import org.activiti.model.connector.ActionDefinition;
-import org.activiti.model.connector.ConnectorDefinition;
 import org.activiti.model.connector.VariableDefinition;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationContext;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class DefaultServiceTaskBehavior extends AbstractBpmnActivityBehavior {
 
     private final ApplicationContext applicationContext;
     private final IntegrationContextBuilder integrationContextBuilder;
-    private final List<ConnectorDefinition> connectorDefinitions;
     private final ConnectorActionDefinitionFinder connectorActionDefinitionFinder;
     private final VariablesMatchHelper variablesMatchHelper;
 
     public DefaultServiceTaskBehavior(ApplicationContext applicationContext,
-                                      IntegrationContextBuilder integrationContextBuilder, List<ConnectorDefinition> connectorDefinitions, ConnectorActionDefinitionFinder connectorActionDefinitionFinder, VariablesMatchHelper variablesMatchHelper) {
+                                      IntegrationContextBuilder integrationContextBuilder, ConnectorActionDefinitionFinder connectorActionDefinitionFinder, VariablesMatchHelper variablesMatchHelper) {
         this.applicationContext = applicationContext;
         this.integrationContextBuilder = integrationContextBuilder;
-        this.connectorDefinitions = connectorDefinitions;
         this.connectorActionDefinitionFinder = connectorActionDefinitionFinder;
         this.variablesMatchHelper = variablesMatchHelper;
     }
@@ -63,7 +56,7 @@ public class DefaultServiceTaskBehavior extends AbstractBpmnActivityBehavior {
 
         String implementation = ((ServiceTask) execution.getCurrentFlowElement()).getImplementation();
 
-        Optional<ActionDefinition> actionDefinitionOptional = connectorActionDefinitionFinder.find(implementation, connectorDefinitions);
+        Optional<ActionDefinition> actionDefinitionOptional = connectorActionDefinitionFinder.find(implementation);
         ActionDefinition actionDefinition = null;
         if(actionDefinitionOptional.isPresent()){
             actionDefinition = actionDefinitionOptional.get();
